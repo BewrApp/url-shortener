@@ -1,0 +1,117 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .form-container {
+    margin-bottom: 20px;
+  }
+  
+  .form-container form input[type="text"],
+  .form-container form input[type="submit"],
+  .save-button,
+  .create-button,
+  .delete-button {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .form-container form input[type="submit"],
+  .create-button,
+  .delete-button,
+  .save-button {
+    background-color: #f8f9fa;
+    color: #333;
+    transition: background-color 0.3s;
+  }
+  
+  .form-container form input[type="submit"]:hover,
+  .create-button:hover,
+  .delete-button:hover,
+  .save-button:hover {
+    background-color: #e9ecef;
+    cursor: pointer;
+  }
+  
+  .form-container form input[type="submit"]:active,
+  .create-button:active,
+  .delete-button:active,
+  .save-button:active {
+    background-color: #dee2e6;
+  }
+  
+  .redirects-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .redirects-table th,
+  .redirects-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .redirects-table th:first-child,
+  .redirects-table td:first-child {
+    border-top-left-radius: 4px;
+  }
+  
+  .redirects-table th:last-child,
+  .redirects-table td:last-child {
+    border-top-right-radius: 4px;
+  }
+  
+  .redirects-table td.qr-code {
+    width: 100px;
+  }
+  
+  .redirects-table td.qr-code img {
+    max-width: 80px;
+  }
+  
+  .redirects-table td.qr-code a {
+    display: block;
+    text-align: center;
+  }
+  
+  .redirects-table td.destination-url {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .redirects-table td.destination-url span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .redirects-table td.destination-url span.editable {
+    border-bottom: 1px dashed #ccc;
+    cursor: pointer;
+  }
+  
+  .redirects-table td.destination-url span.editable:hover {
+    text-decoration: underline;
+  }
+  
+  .redirects-table td.views-counter {
+    text-align: center;
+  }
+  

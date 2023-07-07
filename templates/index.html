@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>URL Redirection Tool</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Function to handle input changes in editable fields
+            $('.editable[data-field="destination_url"]').on('input', function () {
+                var $editable = $(this);
+                var $saveButton = $editable.next('.save-button');
+
+                $saveButton.show();
+            });
+
+            // Function to handle save button click event
+            $('.save-button').on('click', function () {
+                var $saveButton = $(this);
+                var $editable = $saveButton.prev('.editable');
+
+                var redirectId = $editable.data('redirect-id');
+                var field = $editable.data('field');
+                var value = $editable.text();
+
+                // Send an AJAX request to update the database
+                $.ajax({
+                    url: '/update',
+                    type: 'POST',
+                    data: {
+                        redirect_id: redirectId,
+                        field: field,
+                        value: value
+                    },
+                    success: function (response) {
+                        console.log('Update successful');
+                        $saveButton.hide();
+                    },
+                    error: function (error) {
+                        console.log('Error during update');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>URL Redirection Tool</h1>
+
+        <div class="form-container">
+            <!-- Form for creating a new redirect -->
+            <form action="{{ url_for('create_redirect') }}" method="post">
+                <input type="text" id="name" name="name" required placeholder="Custom URL">
+                <input type="text" id="destination_url" name="destination_url" required placeholder="Destination URL">
+                <input class="create-button" type="submit" value="Create Redirect">
+            </form>
+        </div>
+
+        <table class="redirects-table">
+            <tr>
+                <th>Custom URL</th>
+                <th>Destination URL</th>
+                <th>QR Code</th>
+                <th>Views</th>
+                <th>Action</th>
+            </tr>
+            {% for redirect in redirects %}
+            <tr>
+                <td>
+                    {{ redirect.name }}
+                </td>
+                <td class="destination-url">
+                    <!-- Editable field for destination URL -->
+                    <span class="editable" data-redirect-id="{{ redirect.id }}" data-field="destination_url"
+                        contenteditable>{{ redirect.destination_url }}</span>
+                    <button class="save-button" style="display: none;">
+                        <i class="fas fa-save"></i>
+                    </button>
+                </td>
+                <td class="qr-code">
+                    <!-- Link to redirect URL with QR code -->
+                    <a href="{{ url_for('redirect_url', name=redirect.name) }}">
+                        <img src="{{ url_for('generate_qr_code', name=redirect.name) }}">
+                    </a>
+                </td>
+                <td class="views-counter">{{ redirect.views }}</td>
+                <td>
+                    <!-- Form for deleting a redirect -->
+                    <form action="{{ url_for('delete_redirect', name=redirect.name) }}" method="post">
+                        <button class="delete-button" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+    </div>
+</body>
+
+</html>

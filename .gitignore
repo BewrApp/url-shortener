@@ -1,0 +1,8 @@
+venv/
+instance/
+
+# Docker
+.dockerignore
+docker-compose.yml
+Dockerfile
+*.tar
